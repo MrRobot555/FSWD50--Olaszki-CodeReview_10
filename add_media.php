@@ -91,7 +91,12 @@ class media {
 	function createNewMedia(){
 		global $servername, $username, $password, $dbname; 
 		$conn = new mysqli($servername, $username, $password, $dbname);
-		$conn->query("INSERT INTO media (title, image, ISBN, short_description, publish_date, publisher_ID, author_ID, type_ID, available) VALUES ('$this->media_title', '$this->media_image', '$this->media_ISBN', '$this->media_description', '$this->media_publish_date', '$this->pub_listing', '$this->aut_listing', '$this->media_type', '$this->media_available')"); 
+		if ($conn->query("INSERT INTO media (title, image, ISBN, short_description, publish_date, publisher_ID, author_ID, type_ID, available) VALUES ('$this->media_title', '$this->media_image', '$this->media_ISBN', '$this->media_description', '$this->media_publish_date', '$this->pub_listing', '$this->aut_listing', '$this->media_type', '$this->media_available')") === TRUE) {
+					echo("<script>swal('Good job!', 'Media added successully!', 'success').then((value) => {var a = window.location.href; window.location.href=a;});</script>");
+					} else {
+						echo("<script>swal('Error!', 'Read message', 'error');</script>");
+					    echo "Error: " . "<br>" . $conn->error;
+					}
 	}
 } 
 
@@ -384,7 +389,7 @@ include 'navbar.php';
 
 		<div class="form-group">
 		  <label for="media_description">Short description</label>
-		  <textarea class="form-control" rows="4" id="media_description" name="media_description" value="<?php echo $media_description1; ?>"></textarea>
+		  <textarea class="form-control" rows="4" id="media_description" maxlength="2000" name="media_description" value="<?php echo $media_description1; ?>"></textarea>
 		</div>
 
 	   <div class="form-group">
@@ -590,7 +595,7 @@ if (!$conn) {
 
 		$aut_listing = $_POST['aut_listing'];
 		$pub_listing = $_POST['pub_listing'];
-		$media_description = $_POST['media_description'];
+		$media_description = addslashes($_POST['media_description']);
 		$media_ISBN = $_POST['media_ISBN'];
 		$media_image = $_POST['media_image'];		
 		$media_publish_date = $_POST['media_publish_date'];
@@ -601,14 +606,12 @@ if (!$conn) {
 	 	$newMedia = new media($media_title, $aut_listing, $pub_listing, $media_description, $media_ISBN, $media_image, $media_publish_date, $media_type, $media_available);
 	 	$newMedia->createNewMedia();
 
-	 	echo("<script>swal('Good job!', 'Publisher added successully!', 'success').then((value) => {var a = window.location.href; window.location.href=a;});</script>");
+	 	
 		}
 	  }
 	mysqli_close($conn);
 	}
 }
-
-
 
 
 ?>
