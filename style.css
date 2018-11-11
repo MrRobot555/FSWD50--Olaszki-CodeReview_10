@@ -43,3 +43,28 @@ background-size: 100vw 100vh;
 #author_input {
 	border: 2px solid red;
 }
+
+.minipic {
+	padding: 0 0 0 5px!important;
+	height: 140px;
+}
+
+.minipic img {
+	width: 100%;
+}
+
+
+.buttspace {
+	padding: 5px!important;
+}
+
+.mydarkbk {
+	background:rgba(0,0,0,0.5);
+	color: white!important;
+}
+
+.mylightbk {
+	background:rgba(255,255,255,0.5);
+	color: black!important;
+	
+}
